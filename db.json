@@ -18,7 +18,7 @@
       "id": "3",
       "firstName": "Ivan",
       "lastName": "Kovačević",
-      "dateOfBirth": "10-12-2024",
+      "dateOfBirth": "2012-02-23",
       "jobTitle": "Analitičar"
     },
     {
@@ -113,10 +113,10 @@
       "jobTitle": "Dizajner"
     },
     {
-      "id": "a18a",
+      "id": "1f40",
       "firstName": "Marta",
       "lastName": "Martinović",
-      "dateOfBirth": "2001-07-05",
+      "dateOfBirth": "2006-06-07",
       "jobTitle": "Programer"
     }
   ]
