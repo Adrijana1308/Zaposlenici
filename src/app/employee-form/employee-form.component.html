@@ -1,0 +1,87 @@
+<div class="form-containter">
+  <form class="form" #employeeForm="ngForm" (ngSubmit)="onSave(employeeForm)">
+    <h2>Unesite novog zaposlenika</h2>
+    <div class="form-floating mb-3">
+      <input
+        class="form-control"
+        type="text"
+        id="firstName"
+        name="firstName"
+        [(ngModel)]="employee.firstName"
+        required
+        #firstName="ngModel"
+        placeholder="Ana"
+      />
+      <label for="firstName">Ime</label>
+      <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+        <div *ngIf="firstName.errors?.['required']">
+          Ime je obavezno upisati.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        class="form-control"
+        type="text"
+        id="lastName"
+        name="lastName"
+        [(ngModel)]="employee.lastName"
+        required
+        #lastName="ngModel"
+        placeholder="Boban"
+      />
+      <label for="lastName">Prezime</label>
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+        <div *ngIf="lastName.errors?.['required']">
+          Prezime je obavezno upisati.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        class="form-control"
+        type="text"
+        id="jobTitle"
+        name="jobTitle"
+        [(ngModel)]="employee.jobTitle"
+        required
+        #jobTitle="ngModel"
+        placeholder="Programer"
+      />
+      <label for="jobTitle">Pozicija</label>
+
+      <div *ngIf="jobTitle.invalid && (jobTitle.dirty || jobTitle.touched)">
+        <div *ngIf="jobTitle.errors?.['required']">
+          Poziciju je obavezno upisati.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        class="form-control"
+        type="date"
+        id="dateOfBirth"
+        name="dateOfBirth"
+        [(ngModel)]="employee.dateOfBirth"
+        required
+        #dateOfBirth="ngModel"
+        placeholder="09-Aug-2010"
+      />
+      <label for="dateOfBirth">Datum rođenja</label>
+      <div
+        *ngIf="
+          dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)
+        "
+      >
+        <div *ngIf="dateOfBirth.errors?.['required']">
+          Datum rođenja je obavezano upisati.
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-save" type="submit">Spremi</button>
+  </form>
+</div>

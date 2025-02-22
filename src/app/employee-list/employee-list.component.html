@@ -1,0 +1,192 @@
+<div class="main-container">
+  <div class="container">
+    <!-- Loading indikator -->
+    <div *ngIf="loading" class="loading-indicator">
+      <p>Učitavanje podataka...</p>
+    </div>
+
+    <div *ngIf="!loading">
+      <div class="d-flex justify-content-evenly bla">
+        <div class="p-2 form-select-lg mb-3 flex-fill filter-container">
+          <label for="positionFilter">Filtriraj po poziciji</label>
+          <select
+            class="form-select form-select-lg mb-3"
+            id="positionFilter"
+            (change)="filterByPosition($event)"
+          >
+            <option *ngFor="let position of positions" [value]="position">
+              {{ position }}
+            </option>
+          </select>
+        </div>
+
+        <div class="p-2 form-select-lg mb-3 flex-fill sort-container">
+          <label for="sort">Sortiraj</label>
+          <select
+            class="form-select form-select-lg mb-3"
+            id="sort"
+            (change)="sortEmployees($event)"
+          >
+            <option value="">---</option>
+            <option value="firstName">Ime</option>
+            <option value="lastName">Prezime</option>
+            <option value="jobTitle">Pozicija</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="p-2 form-select-lg mb-3 search-container">
+        <label for="search">Pretraži zaposlenike</label>
+        <input
+          class="form-control form-control-lg me-2"
+          id="search"
+          type="text"
+          [(ngModel)]="searchQuery"
+          (input)="search($event)"
+          placeholder="Marko Marić"
+        />
+      </div>
+
+      <!-- Prikazivanje zaposlenika -->
+      <div
+        class="row g-4"
+        *ngIf="filteredEmployees && filteredEmployees.length > 0"
+      >
+        <div class="col" *ngFor="let employee of getPageData()">
+          <!-- Ako je zaposlenik u uređivanju, prikaži formular umjesto kartice -->
+          <div *ngIf="selectedEmployee?.id === employee.id; else employeeCard">
+            <div class="edit-form">
+              <h3>Uredi zaposlenika</h3>
+              <form (ngSubmit)="updateEmployee()">
+                <div class="mb-3">
+                  <label for="firstName">Ime:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="selectedEmployee.firstName"
+                    name="firstName"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="lastName">Prezime:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="selectedEmployee.lastName"
+                    name="lastName"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="dateOfBirth">Datum rođenja:</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="selectedEmployee.dateOfBirth"
+                    name="dateOfBirth"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="jobTitle">Pozicija:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="selectedEmployee.jobTitle"
+                    name="jobTitle"
+                    required
+                  />
+                </div>
+
+                <button type="submit" class="btn btn-success">Spremi</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="cancelEdit()"
+                >
+                  Odustani
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Kartica zaposlenika -->
+          <ng-template #employeeCard>
+            <div class="card" style="width: 19rem">
+              <div class="edit-delete-buttons">
+                <button class="btn btn-edit" (click)="editEmployee(employee)">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/10336/10336582.png"
+                    class="card-img-edit"
+                    alt="Edit button"
+                  />
+                </button>
+                <button
+                  class="btn btn-delete"
+                  (click)="deleteEmployee(employee)"
+                >
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/10336/10336279.png"
+                    class="card-img-delete"
+                    alt="Edit button"
+                  />
+                </button>
+              </div>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/9131/9131478.png"
+                class="card-img-top"
+                alt="User image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ employee.firstName }} {{ employee.lastName }}
+                </h5>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <b>Datum rođenja:</b>
+                  {{ employee.dateOfBirth | date : "dd-MM-yyyy" }}
+                </li>
+                <li class="list-group-item">
+                  <b>Pozicija:</b> {{ employee.jobTitle }}
+                </li>
+              </ul>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Poruka kada nema zaposlenika -->
+      <p *ngIf="filteredEmployees.length === 0">Zaposlenici nisu pronađeni.</p>
+
+      <!-- Navigacija kroz stranice -->
+      <nav class="pag-nav">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="#" (click)="goToPage(currentPage - 1)"
+              >Prethodna</a
+            >
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === i + 1"
+          >
+            <a class="page-link" href="#" (click)="goToPage(i + 1)">{{
+              i + 1
+            }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="#" (click)="goToPage(currentPage + 1)"
+              >Sljedeća</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

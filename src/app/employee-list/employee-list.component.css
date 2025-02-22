@@ -1,0 +1,100 @@
+.row {
+  margin: auto;
+}
+
+.col {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.card {
+  border-color: #dee2e6;
+}
+
+.container > h1 {
+  margin-bottom: 3%;
+  padding: 0 10px;
+}
+
+.pag-nav {
+  margin: 30px 0;
+}
+
+.page-link {
+  padding: 15px;
+}
+
+.btn-success {
+  margin-right: 10px;
+}
+
+.card-img-top {
+  width: 80%;
+  padding: 35px;
+  padding-top: 55px;
+  margin: auto;
+}
+
+.edit-delete-buttons {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
+  gap: 0px;
+  padding: 0px;
+  z-index: 1;
+}
+
+.card-img-edit,
+.card-img-delete {
+  width: 30px;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 30px;
+  }
+  .form-select,
+  label,
+  .form-control {
+    font-size: 17px;
+  }
+  .card-img-top {
+    width: 60%;
+  }
+  .card-title {
+    font-size: 20px;
+  }
+  .list-group {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 426px) {
+  h1 {
+    margin-top: 80px;
+    font-size: 28px;
+  }
+  .form-select,
+  label,
+  .form-control {
+    font-size: 16px;
+  }
+  .card-img-top {
+    width: 50%;
+  }
+  .card-title {
+    font-size: 17px;
+  }
+  .list-group {
+    font-size: 14px;
+  }
+}
