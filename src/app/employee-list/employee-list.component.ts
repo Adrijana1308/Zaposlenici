@@ -208,7 +208,7 @@ export class EmployeeListComponent implements OnInit {
     console.log('Podaci o zaposleniku:', employee);
 
     this.http
-      .delete(`https://zaposlenici-json.onrender.com/employees/{id}`)
+      .delete(`https://zaposlenici-json.onrender.com/employees/${employee.id}`)
       .subscribe({
         next: () => {
           console.log(`Zaposlenik s ID-em ${employee.id} uspješno obrisan.`);
