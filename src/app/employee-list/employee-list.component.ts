@@ -205,6 +205,10 @@ export class EmployeeListComponent implements OnInit {
       .subscribe({
         next: () => {
           console.log('Zaposlenik ažuriran:', this.selectedEmployee);
+          console.log(
+            'Dohvaćanje zaposlenika nakon update-a:',
+            this.ngOnInit()
+          );
 
           setTimeout(() => {
             this.fetchEmployees();
