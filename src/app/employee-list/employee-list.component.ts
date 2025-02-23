@@ -177,6 +177,7 @@ export class EmployeeListComponent implements OnInit {
         );
 
         this.applyFilters();
+        this.fetchEmployees();
 
         this.selectedEmployee = null;
       });
