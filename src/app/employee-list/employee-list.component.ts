@@ -199,27 +199,33 @@ export class EmployeeListComponent implements OnInit {
     this.cancelEdit();
   }
 
+  fetchEmployees(): void {
+    this.http
+      .get<any[]>('https://zaposlenici-json.onrender.com/employees')
+      .subscribe({
+        next: (data) => {
+          this.employees = data;
+          this.filteredEmployees = data;
+          console.log('Podaci uspješno dohvaćeni:', data);
+        },
+        error: (error) => {
+          console.error('Greška prilikom dohvaćanja zaposlenika:', error);
+        },
+      });
+  }
+
   deleteEmployee(employee: { id: string }): void {
     if (!employee || !employee.id) {
       console.error('Nevažeći podaci o zaposleniku:', employee);
       return;
     }
 
-    console.log('Podaci o zaposleniku:', employee);
-
     this.http
       .delete(`https://zaposlenici-json.onrender.com/employees/${employee.id}`)
       .subscribe({
         next: () => {
           console.log(`Zaposlenik s ID-em ${employee.id} uspješno obrisan.`);
-
-          this.employees = this.employees.filter((e) => e.id !== employee.id);
-          this.filteredEmployees = this.filteredEmployees.filter(
-            (e) => e.id !== employee.id
-          );
-
-          // **Prisilno osvježi UI**
-          this.cdr.detectChanges();
+          this.fetchEmployees();
         },
         error: (error) => {
           console.error('Greška prilikom brisanja zaposlenika:', error);
