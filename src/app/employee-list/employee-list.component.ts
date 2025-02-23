@@ -55,7 +55,7 @@ export class EmployeeListComponent implements OnInit {
         this.loading = false;
         if (response && Array.isArray(response)) {
           this.employees = response;
-          this.filteredEmployees = [...this.employees];
+          this.filteredEmployees = [this.employees];
           console.log('Filtered Employees:', this.filteredEmployees);
         } else {
           this.employees = [];
@@ -205,11 +205,6 @@ export class EmployeeListComponent implements OnInit {
       .subscribe({
         next: () => {
           console.log('Zaposlenik ažuriran:', this.selectedEmployee);
-          console.log(
-            'Dohvaćanje zaposlenika nakon update-a:',
-            this.ngOnInit()
-          );
-
           setTimeout(() => {
             this.fetchEmployees();
           }, 500);
