@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private apiUrl = 'http://localhost:3000/employees';
+  private apiUrl = 'https://zaposlenici-json.onrender.com/employees';
 
   constructor(private http: HttpClient) {}
 
@@ -15,6 +15,9 @@ export class EmployeeService {
   }
 
   OnSave(employee: any): Observable<any> {
-    return this.http.post('http://localhost:3000/employees', employee);
+    return this.http.post(
+      'https://zaposlenici-json.onrender.com/employees',
+      employee
+    );
   }
 }

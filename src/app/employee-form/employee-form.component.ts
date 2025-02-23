@@ -18,7 +18,7 @@ export class EmployeeFormComponent {
     jobTitle: '',
   };
 
-  private apiUrl = 'http://localhost:3000/employees';
+  private apiUrl = 'https://zaposlenici-json.onrender.com/employees';
 
   constructor(private http: HttpClient) {}
 

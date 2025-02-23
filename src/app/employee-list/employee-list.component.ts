@@ -39,7 +39,7 @@ export class EmployeeListComponent implements OnInit {
     'Programer',
   ];
 
-  private apiUrl = 'http://localhost:3000/employees';
+  private apiUrl = 'https://zaposlenici-json.onrender.com/employees';
 
   constructor(
     private employeeService: EmployeeService,
