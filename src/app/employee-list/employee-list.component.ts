@@ -164,22 +164,21 @@ export class EmployeeListComponent implements OnInit {
     this.selectedEmployee = { ...employee };
     this.selectedEmployeeId = employee.id;
   }
-  updateEmployee() {
+  updateEmployee(): void {
     if (!this.selectedEmployee) return;
 
     this.http
       .put(`${this.apiUrl}/${this.selectedEmployee.id}`, this.selectedEmployee)
-      .subscribe((updatedEmployee) => {
-        console.log('Zaposlenik ažuriran:', updatedEmployee);
+      .subscribe({
+        next: (updatedEmployee) => {
+          console.log('Zaposlenik ažuriran:', updatedEmployee);
 
-        this.employees = this.employees.map((emp) =>
-          emp.id === this.selectedEmployee.id ? this.selectedEmployee : emp
-        );
-
-        this.applyFilters();
-        this.fetchEmployees();
-
-        this.selectedEmployee = null;
+          this.fetchEmployees();
+          this.selectedEmployee = null;
+        },
+        error: (error) => {
+          console.error('Greška prilikom ažuriranja zaposlenika:', error);
+        },
       });
   }
 
