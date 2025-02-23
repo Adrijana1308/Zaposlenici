@@ -213,13 +213,10 @@ export class EmployeeListComponent implements OnInit {
         next: () => {
           console.log(`Zaposlenik s ID-em ${employee.id} uspješno obrisan.`);
 
-          // **Ažuriraj prikaz liste odmah**
-          this.employees = [
-            ...this.employees.filter((e) => e.id !== employee.id),
-          ];
-          this.filteredEmployees = [
-            ...this.filteredEmployees.filter((e) => e.id !== employee.id),
-          ];
+          this.employees = this.employees.filter((e) => e.id !== employee.id);
+          this.filteredEmployees = this.filteredEmployees.filter(
+            (e) => e.id !== employee.id
+          );
 
           // **Prisilno osvježi UI**
           this.cdr.detectChanges();
