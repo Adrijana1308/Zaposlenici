@@ -207,11 +207,10 @@ export class EmployeeListComponent implements OnInit {
       .subscribe({
         next: () => {
           console.log('Zaposlenik ažuriran:', this.selectedEmployee);
-          setTimeout(() => {
-            this.fetchEmployees();
-          }, 500);
 
+          this.fetchEmployees();
           this.selectedEmployee = null;
+          this.ngOnInit();
         },
         error: (error) => {
           console.error('Greška prilikom ažuriranja zaposlenika:', error);

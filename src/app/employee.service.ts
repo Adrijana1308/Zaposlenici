@@ -10,8 +10,9 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
-  getEmployees(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getEmployees(): Observable<any[]> {
+    const timestamp = new Date().getTime(); // Jedinstveni parametar
+    return this.http.get<any[]>(`${this.apiUrl}?_t=${timestamp}`);
   }
 
   OnSave(employee: any): Observable<any> {
