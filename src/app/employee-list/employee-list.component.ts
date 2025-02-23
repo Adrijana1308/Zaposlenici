@@ -164,23 +164,6 @@ export class EmployeeListComponent implements OnInit {
     this.selectedEmployee = { ...employee };
     this.selectedEmployeeId = employee.id;
   }
-  updateEmployee(): void {
-    if (!this.selectedEmployee) return;
-
-    this.http
-      .put(`${this.apiUrl}/${this.selectedEmployee.id}`, this.selectedEmployee)
-      .subscribe({
-        next: (updatedEmployee) => {
-          console.log('Zaposlenik ažuriran:', updatedEmployee);
-
-          this.fetchEmployees();
-          this.selectedEmployee = null;
-        },
-        error: (error) => {
-          console.error('Greška prilikom ažuriranja zaposlenika:', error);
-        },
-      });
-  }
 
   cancelEdit() {
     this.selectedEmployee = null;
@@ -210,6 +193,27 @@ export class EmployeeListComponent implements OnInit {
         },
         error: (error) => {
           console.error('Greška prilikom dohvaćanja zaposlenika:', error);
+        },
+      });
+  }
+
+  updateEmployee(): void {
+    if (!this.selectedEmployee) return;
+
+    this.http
+      .put(`${this.apiUrl}/${this.selectedEmployee.id}`, this.selectedEmployee)
+      .subscribe({
+        next: () => {
+          console.log('Zaposlenik ažuriran:', this.selectedEmployee);
+
+          setTimeout(() => {
+            this.fetchEmployees();
+          }, 500);
+
+          this.selectedEmployee = null;
+        },
+        error: (error) => {
+          console.error('Greška prilikom ažuriranja zaposlenika:', error);
         },
       });
   }
