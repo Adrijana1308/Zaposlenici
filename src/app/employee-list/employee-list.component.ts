@@ -49,14 +49,16 @@ export class EmployeeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.employees = []; // Resetiraj listu prije učitavanja novih podataka
+    this.filteredEmployees = [];
+
     this.employeeService.getEmployees().subscribe(
       (response) => {
         console.log('Response:', response);
         this.loading = false;
         if (response && Array.isArray(response)) {
           this.employees = response;
-          this.filteredEmployees = [this.employees];
-          console.log('Filtered Employees:', this.filteredEmployees);
+          this.filteredEmployees = [...this.employees];
         } else {
           this.employees = [];
           this.filteredEmployees = [];
