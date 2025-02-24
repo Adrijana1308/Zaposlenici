@@ -58,6 +58,29 @@
   display: block;
 }
 
+@media (max-width: 1440px) {
+  h1 {
+    font-size: 30px;
+  }
+  .form-select,
+  label,
+  .form-control {
+    font-size: 17px;
+  }
+  .card {
+    width: 18rem;
+  }
+  .card-img-top {
+    width: 60%;
+  }
+  .card-title {
+    font-size: 20px;
+  }
+  .list-group {
+    font-size: 17px;
+  }
+}
+
 @media (max-width: 1024px) {
   h1 {
     font-size: 30px;
