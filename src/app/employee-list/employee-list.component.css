@@ -91,6 +91,9 @@
   .form-control {
     font-size: 17px;
   }
+  .card {
+    width: 13rem;
+  }
   .card-img-top {
     width: 60%;
   }
