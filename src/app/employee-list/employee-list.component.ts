@@ -82,21 +82,8 @@ export class EmployeeListComponent implements OnInit {
   }
 
   search(event: Event): void {
-    const query = (event.target as HTMLInputElement).value.toLowerCase();
-
-    this.filteredEmployees = this.employees.filter((employee) => {
-      const fullName =
-        `${employee.firstName} ${employee.lastName}`.toLowerCase();
-      return (
-        fullName.includes(query) ||
-        employee.firstName.toLowerCase().includes(query) ||
-        employee.lastName.toLowerCase().includes(query)
-      );
-    });
-
-    if (this.filteredEmployees.length === 0) {
-      console.log('Zaposlenici nisu pronađeni.');
-    }
+    this.searchQuery = (event.target as HTMLInputElement).value.toLowerCase();
+    this.applyFilters(); // Ponovno primijeni filtre nakon pretrage
   }
 
   sortEmployees(event: Event): void {
@@ -108,46 +95,43 @@ export class EmployeeListComponent implements OnInit {
   }
 
   applyFilters(): void {
-    if (!this.filteredEmployees) {
-      this.filteredEmployees = [];
-    }
+    if (!this.employees) return;
 
-    let filtered = this.employees;
+    let filtered = [...this.employees]; // Koristimo kopiju podataka
 
+    // 🔹 Filtriranje po poziciji
     if (this.selectedPosition && this.selectedPosition !== '---') {
       filtered = filtered.filter(
-        (employee) => employee.jobTitle === this.selectedPosition
-      );
-    }
-
-    if (this.searchQuery) {
-      filtered = filtered.filter(
         (employee) =>
-          employee.firstName
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()) ||
-          employee.lastName
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase())
+          employee.jobTitle.toLowerCase() ===
+          this.selectedPosition.toLowerCase()
       );
     }
 
+    // 🔹 Pretraga (sada radi zajedno s filtriranjem)
+    if (this.searchQuery) {
+      filtered = filtered.filter((employee) => {
+        const fullName =
+          `${employee.firstName} ${employee.lastName}`.toLowerCase();
+        return fullName.includes(this.searchQuery);
+      });
+    }
+
+    // 🔹 Sortiranje ako postoji odabrano polje
     if (this.sortBy) {
-      filtered = filtered.sort((a, b) => {
-        if (a[this.sortBy] < b[this.sortBy]) {
-          return -1;
-        }
-        if (a[this.sortBy] > b[this.sortBy]) {
-          return 1;
-        }
+      filtered.sort((a, b) => {
+        if (a[this.sortBy] < b[this.sortBy]) return -1;
+        if (a[this.sortBy] > b[this.sortBy]) return 1;
         return 0;
       });
     }
 
-    this.totalItems = filtered.length;
+    // Ažuriraj filtrirane podatke i paginaciju
     this.filteredEmployees = filtered;
+    this.totalItems = filtered.length;
     this.getPageData();
   }
+
   getPageData(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
