@@ -40,21 +40,24 @@
     </div>
 
     <div class="form-floating mb-3">
-      <input
+      <select
         class="form-control"
-        type="text"
         id="jobTitle"
         name="jobTitle"
         [(ngModel)]="employee.jobTitle"
         required
         #jobTitle="ngModel"
-        placeholder="Programer"
-      />
+      >
+        <option value="" disabled selected>---</option>
+        <option *ngFor="let position of allowedPositions" [value]="position">
+          {{ position }}
+        </option>
+      </select>
       <label for="jobTitle">Pozicija</label>
 
       <div *ngIf="jobTitle.invalid && (jobTitle.dirty || jobTitle.touched)">
         <div *ngIf="jobTitle.errors?.['required']">
-          Poziciju je obavezno upisati.
+          Poziciju je obavezno odabrati.
         </div>
       </div>
     </div>

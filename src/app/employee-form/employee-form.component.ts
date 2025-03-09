@@ -18,12 +18,25 @@ export class EmployeeFormComponent {
     jobTitle: '',
   };
 
+  allowedPositions = [
+    'Inženjer',
+    'Konzultant',
+    'Menađer',
+    'Analitičar',
+    'Dizajner',
+    'Programer',
+  ];
+
   private apiUrl = 'https://zaposlenici-json.onrender.com/employees';
 
   constructor(private http: HttpClient) {}
 
   onSave(form: NgForm): void {
     if (form.valid) {
+      if (!this.allowedPositions.includes(this.employee.jobTitle)) {
+        alert('Odabrana pozicija nije dopuštena!');
+        return;
+      }
       console.log('Podaci zaposlenika:', this.employee);
 
       this.http
